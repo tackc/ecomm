@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+// By adding this here, you can avoid having to put the entire code snippet into each route handler. i.e. app.post('/', bodyParser.urlencoded({ extended: true }) ,(req, res) => {...
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Route handler (what to do when a request comes in from the browser)
 app.get('/', (req, res) => {
@@ -16,25 +20,7 @@ app.get('/', (req, res) => {
     );
 });
 
-// "next" is a callback function that is handed back to us from Express (Express was created before promises / async / await)
-const bodyParser = (req, res, next) => {
-    if (req.method === 'POST') {
-        req.on('data', data => {
-            const parsed = data.toString('utf8').split('&');
-            const formData = {};
-            for (let pair of parsed) {
-                const [key, value] = pair.split('=');
-                formData[key] = value
-            }
-            req.body = formData;
-            next();
-        });
-    } else {
-        next();
-    }
-}
-
-app.post('/', bodyParser, (req, res) => {
+app.post('/', (req, res) => {
     console.log(req.body);
     res.send('Account Created! *not really though ;)')
 })
