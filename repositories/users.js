@@ -28,8 +28,12 @@ class UsersRepository {
         const records = await this.getAll();
         records.push(attrs);
 
+        await this.writeAll(records);
+    }
+
+    async writeAll(records) {
         // write the updated records array to this.filename
-        await fs.promises.writeFile(this.filename, JSON.stringify(records))
+        await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 4))
     }
 }
 
@@ -38,7 +42,7 @@ const test = async () => {
     const repo = new UsersRepository('users.json');
 
     await repo.create({ email: 'test@test.com', password: 'password' })
-    
+
     //this is only being placed inside test() because older versions of node do not support top level 'await' statements
     const users = await repo.getAll();
 
