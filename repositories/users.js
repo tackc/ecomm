@@ -37,6 +37,8 @@ class UsersRepository {
 const test = async () => {
     const repo = new UsersRepository('users.json');
 
+    await repo.create({ email: 'test@test.com', password: 'password' })
+    
     //this is only being placed inside test() because older versions of node do not support top level 'await' statements
     const users = await repo.getAll();
 
