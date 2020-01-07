@@ -1,14 +1,40 @@
+const fs = require('fs')
+
 class UsersRepository {
     //constructor functions get called immediately whenever we create a new instance of a class
+    //constructor functions are not allowed to be async in nature...that's why we are using fs.accessSync...normally not used much because there is no callback (it's not asynchronous)
     constructor(filename) {
         if(!filename) {
             throw new Error('Creating a repository requires a filename')
         }
-        
-        this.filename = filename;
 
+        this.filename = filename;
+        try {
+            fs.accessSync(this.filename);
+        } catch (err) {
+            fs.writeFileSync(this.filename, '[]')
+        }
+    }
+
+    async getAll() {
+        //open the file called this.filename
+        const contents = await fs.promises.readFile(this.filename, {
+            encoding: 'utf8'
+        });
+        //read its contents
+        console.log(contents);
+        //parse contents
+
+        //Return the parsed data
     }
 }
 
 //Testing stuff - cd into the repositories directory and run 'node users.js'...should see the error in Terminal
-new UsersRepository();
+const test = async () => {
+    const repo = new UsersRepository('users.json');
+
+    //this is only being placed inside test() because older versions of node do not support top level 'await' statements
+    await repo.getAll();
+};
+
+test();
