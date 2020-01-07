@@ -23,6 +23,14 @@ class UsersRepository {
             })
         );
     }
+
+    async create(attrs) {
+        const records = await this.getAll();
+        records.push(attrs);
+
+        // write the updated records array to this.filename
+        await fs.promises.writeFile(this.filename, JSON.stringify(records))
+    }
 }
 
 //Testing stuff - cd into the repositories directory and run 'node users.js'...should see the error in Terminal
