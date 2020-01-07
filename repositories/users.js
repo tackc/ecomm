@@ -22,10 +22,12 @@ class UsersRepository {
             encoding: 'utf8'
         });
         //read its contents
-        console.log(contents);
+
         //parse contents
+        const data = JSON.parse(contents);
 
         //Return the parsed data
+        return data;
     }
 }
 
@@ -34,7 +36,9 @@ const test = async () => {
     const repo = new UsersRepository('users.json');
 
     //this is only being placed inside test() because older versions of node do not support top level 'await' statements
-    await repo.getAll();
+    const users = await repo.getAll();
+
+    console.log(users)
 };
 
 test();
