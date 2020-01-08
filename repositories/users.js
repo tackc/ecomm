@@ -53,13 +53,26 @@ class UsersRepository {
         const filteredRecords = records.filter(record => record.id !== id);
         await this.writeAll(filteredRecords);
     }
+
+    async update(id, attrs) {
+        const records = await this.getAll();
+        const record = records.find(record => record.id === id);
+
+        if (!record) {
+            throw new Error(`Record with id ${id} not found`);
+        }
+
+        //takes the info in the second argument and adds it to the first argument
+        Object.assign(record, attrs);
+        await this.writeAll(records);
+    }
 }
 
 //Testing stuff - cd into the repositories directory and run 'node users.js'
 const test = async () => {
     const repo = new UsersRepository('users.json');
 
-    await repo.delete('b3d5be5c');
+    await repo.update('3090alksjdff16', { password: 'mypassword' });
 };
 
 test();
