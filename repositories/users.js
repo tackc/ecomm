@@ -47,15 +47,19 @@ class UsersRepository {
         const records = await this.getAll();
         return records.find(record => record.id === id);
     }
+
+    async delete(id) {
+        const records = await this.getAll();
+        const filteredRecords = records.filter(record => record.id !== id);
+        await this.writeAll(filteredRecords);
+    }
 }
 
 //Testing stuff - cd into the repositories directory and run 'node users.js'
 const test = async () => {
     const repo = new UsersRepository('users.json');
 
-    const user = await repo.getOne('lkjdsf');
-
-    console.log(user)
+    await repo.delete('b3d5be5c');
 };
 
 test();
