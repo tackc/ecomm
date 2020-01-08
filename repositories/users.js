@@ -1,4 +1,5 @@
-const fs = require('fs')
+const fs = require('fs');
+const crypto = require('crypto');
 
 class UsersRepository {
     //constructor functions get called immediately whenever we create a new instance of a class
@@ -25,6 +26,8 @@ class UsersRepository {
     }
 
     async create(attrs) {
+        attrs.id = this.randomId();
+
         const records = await this.getAll();
         records.push(attrs);
 
@@ -35,9 +38,13 @@ class UsersRepository {
         // write the updated records array to this.filename
         await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 4))
     }
+
+    randomId() {
+        return crypto.randomBytes(4).toString('hex');
+    }
 }
 
-//Testing stuff - cd into the repositories directory and run 'node users.js'...should see the error in Terminal
+//Testing stuff - cd into the repositories directory and run 'node users.js'
 const test = async () => {
     const repo = new UsersRepository('users.json');
 
