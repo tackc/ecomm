@@ -85,13 +85,7 @@ class UsersRepository {
     }
 }
 
-//Testing stuff - cd into the repositories directory and run 'node users.js'
-const test = async () => {
-    const repo = new UsersRepository('users.json');
+module.exports = new UsersRepository('users.json');
 
-    const user = await repo.getOneBy({ lkjlkj: '123' });
-
-    console.log(user);
-};
-
-test();
+// down side to exporting as below is that it exports the entire Class...we only want to export an instance of the Class
+// module.exports = UsersRepository;
