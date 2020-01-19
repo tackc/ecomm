@@ -12,7 +12,7 @@ app.use(cookieSession({
 }))
 
 //Route handler (what to do when a request comes in from the browser)
-app.get('/', (req, res) => {
+app.get('/signup', (req, res) => {
     res.send(`
         <div>
             Your id is: ${req.session.userId}
@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 });
 
 // Any time you are using await, the enclosing function must be labeled as async
-app.post('/', async (req, res) => {
+app.post('/signup', async (req, res) => {
     const { email, password, passwordConfirmation } = req.body;
     
     // Check to see if someone has already signed up with this email
@@ -48,6 +48,12 @@ app.post('/', async (req, res) => {
 
     res.send('Account created!!!');
 });
+
+app.get('/signout', (req, res) => {
+    // take current session information in cookie and forget it
+    req.session = null;
+    res.send('You are logged out!')
+})
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
