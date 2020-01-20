@@ -1,6 +1,7 @@
 const express = require('express');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
+const signinTemplate = require('../../views/admin/auth/signin');
 
 // Since these routes are living here instead of the root index.js, this is acting as a sub-router. This is why we use router.get instead of app.get in this file!
 router = express.Router();
@@ -40,15 +41,7 @@ router.get('/signout', (req, res) => {
 })
 
 router.get('/signin', (req, res) => {
-    res.send(`
-    <div>
-        <form method="POST">
-            <input name="email" placeholder="email" />
-            <input name="password" placeholder="password" />
-            <button>Sign In</button>
-        </form>
-    </div>
-    `)
+    res.send(signinTemplate())
 });
 
 router.post('/signin', async (req, res) => {
