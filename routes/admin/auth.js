@@ -1,22 +1,13 @@
 const express = require('express');
 const usersRepo = require('../../repositories/users');
+const signupTemplate = require('../../views/admin/auth/signup');
 
 // Since these routes are living here instead of the root index.js, this is acting as a sub-router. This is why we use router.get instead of app.get in this file!
 router = express.Router();
 
 //Route handler (what to do when a request comes in from the browser)
 router.get('/signup', (req, res) => {
-    res.send(`
-        <div>
-            Your id is: ${req.session.userId}
-            <form method="POST">
-                <input name="email" placeholder="email" />
-                <input name="password" placeholder="password" />
-                <input name="passwordConfirmation" placeholder="password confirmation" />
-                <button>Sign Up</button>
-            </form>
-        </div>
-    `);
+    res.send(signupTemplate({ req }));
 });
 
 // Any time you are using await, the enclosing function must be labeled as async
