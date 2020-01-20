@@ -11,7 +11,7 @@ app.use(cookieSession({
     keys: ['lkjsdMEIlk3845lkjfsLJD']
 }))
 
-// This needs to be after the middleware
+// This needs to be after the middleware. The code that lives in routes/admin/auth.js is being utilized here (the code in auth.js used to live in this file)
 app.use(authRouter);
 
 app.listen(3000, () => {
