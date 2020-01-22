@@ -1,4 +1,6 @@
 const express = require('express');
+const { check } = require('express-validator');
+
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
@@ -12,7 +14,11 @@ router.get('/signup', (req, res) => {
 });
 
 // Any time you are using await, the enclosing function must be labeled as async
-router.post('/signup', async (req, res) => {
+router.post('/signup', [
+    check('email').isEmail(),
+    check('password'),
+    check('passwordConfirmation')
+], async (req, res) => {
     const { email, password, passwordConfirmation } = req.body;
     
     // Check to see if someone has already signed up with this email
