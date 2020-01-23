@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const { requireEmail, requirePassword, requirePasswordConfirmation } = require('./validators');
 
 // Since these routes are living here instead of the root index.js, this is acting as a sub-router. This is why we use router.get instead of app.get in this file!
 router = express.Router();
@@ -15,19 +16,9 @@ router.get('/signup', (req, res) => {
 
 // Any time you are using await, the enclosing function must be labeled as async
 router.post('/signup', [
-    check('email').trim().normalizeEmail().isEmail().withMessage('You must use a valid email').custom(async email => {
-        // Check to see if someone has already signed up with this email
-        const existingUser = await usersRepo.getOneBy({ email });
-        if (existingUser) {
-            throw new Error('Email in use');
-        }
-    }),
-    check('password').trim().isLength({ min: 4, max: 20 }).withMessage('Must be between 4 & 20 characters'),
-    check('passwordConfirmation').trim().isLength({ min: 4, max: 20 }).withMessage('Must be between 4 & 20 characters').custom((passwordConfirmation, { req }) => {
-        if (passwordConfirmation !== req.body.password) {
-            throw new Error('Passwords must match');
-        }
-    })
+    requireEmail,
+    requirePassword,
+    requirePasswordConfirmation
 ], 
 async (req, res) => {
     const errors = validationResult(req);
