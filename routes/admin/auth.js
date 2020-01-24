@@ -15,14 +15,13 @@ router.get('/signup', (req, res) => {
 });
 
 // Any time you are using await, the enclosing function must be labeled as async
-router.post('/signup', [
-    requireEmail,
-    requirePassword,
-    requirePasswordConfirmation
-], 
+router.post('/signup', [requireEmail, requirePassword, requirePasswordConfirmation], 
 async (req, res) => {
     const errors = validationResult(req);
-    console.log(errors);
+    
+    if (!errors.isEmpty()) {
+        return res.send(signupTemplate({ req, errors }))
+    }
 
     const { email, password, passwordConfirmation } = req.body;
 
