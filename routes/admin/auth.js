@@ -76,13 +76,9 @@ router.post('/signin', [
     const errors = validationResult(req);
     console.log(errors);
 
-    const { email, password } = req.body;
+    const { email    } = req.body;
 
     const user = await usersRepo.getOneBy({ email });
-
-    if (!user) {
-        return res.send('Email not found');
-    }
 
     req.session.userId = user.id;
 

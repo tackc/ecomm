@@ -7,9 +7,11 @@ const app = express();
 
 // By adding this here, you can avoid having to put the entire code snippet into each route handler. i.e. app.post('/', bodyParser.urlencoded({ extended: true }) ,(req, res) => {...
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({
-    keys: ['lkjsdMEIlk3845lkjfsLJD']
-}))
+app.use(
+    cookieSession({
+        keys: ['lkasld235jDBJ']
+    })
+);
 
 // This needs to be after the middleware. The code that lives in routes/admin/auth.js is being utilized here (the code in auth.js used to live in this file)
 app.use(authRouter);
