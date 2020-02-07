@@ -42,7 +42,7 @@ router.get('/signout', (req, res) => {
 
 router.get('/signin', (req, res) => {
     // An empty object is being passed in here just in case there are no errors
-    res.send(signinTemplate({}))
+    res.send(signinTemplate({}));
 });
 
 router.post('/signin', [requireEmailExists, requireValidPasswordForUser], async (req, res) => {
