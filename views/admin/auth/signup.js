@@ -1,14 +1,5 @@
 const layout = require('../layout')
-
-const getError = (errors, prop) => {
-    // prop === 'email' || 'password' || 'passwordConfirmation'
-    try {
-        return errors.mapped()[prop].msg;
-        // errors.mapped is going to return an object with props ONLY IF THEY EXIST. That's why we are using a try / catch statement instead of an if statement. This is a cheat. Series of if statements would be the "right" way
-    } catch (err) {
-        return '';
-    }
-}
+const { getError } = require('../../helpers');
 
 module.exports = ({ req, errors }) => {
     return layout({ 
