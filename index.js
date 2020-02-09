@@ -5,6 +5,9 @@ const authRouter = require('./routes/admin/auth');
 
 const app = express();
 
+// This makes the public folder accessible by everyone
+app.use(express.static('public'));
+
 // By adding this here, you can avoid having to put the entire code snippet into each route handler. i.e. app.post('/', bodyParser.urlencoded({ extended: true }) ,(req, res) => {...
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
