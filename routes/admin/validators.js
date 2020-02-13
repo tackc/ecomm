@@ -2,6 +2,13 @@ const { check } = require('express-validator');
 const usersRepo = require('../../repositories/users');
 
 module.exports = {
+    requireTitle: check('title')
+        .trim()
+        .isLength({ min: 5, max: 40 }),
+    requirePrice: check('price')
+        .trim()
+        .toFloat()
+        .isFloat({ min: 1 }),
     requireEmail: check('email')
         .trim()
         .normalizeEmail()
@@ -28,7 +35,7 @@ module.exports = {
         .normalizeEmail()
         .isEmail()
         .withMessage('Must provide a valid email')
-        .custom(async (email) => {
+        .custom(async email => {
             const user = await usersRepo.getOneBy({ email });
             if(!user) {
                 throw new Error('Email not found!');
