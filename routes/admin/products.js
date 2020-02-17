@@ -17,7 +17,7 @@ router.get('/admin/products/new', (req, res) => {
 });
 
 router.post('/admin/products/new', 
-    // Read the docs...the string being fed into upload.single below needs to match the input name on the form. Also, the order that middleware is written is important!
+    // Read the docsfor multer...the string being fed into upload.single below needs to match the input name on the form. Also, the order that middleware is written is important!
     upload.single('image'), 
     [requireTitle, requirePrice], 
     async (req, res) => {
