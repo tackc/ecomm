@@ -12,5 +12,12 @@ module.exports = {
             // Everything went well, call the next middleware or invoke the route handler
             next();
         };
+    },
+    requireAuth(req, res, next) {
+        if (!req.session.userId) {
+            return res.redirect('/signin');
+        }
+
+        next();
     }
 };
