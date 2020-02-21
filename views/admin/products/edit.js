@@ -10,11 +10,11 @@ module.exports = ({ product, errors }) => {
 
             <form method="POST" enctype="multipart/form-data">
                 <div class="field">
-                <label class="label">Title</label>
-                <input value="${
-                    product.title
-                }" class="input" placeholder="Title" name="title">
-                <p class="help is-danger">${getError(errors, 'title')}</p>
+                    <label class="label">Title</label>
+                    <input value="${
+                        product.title
+                    }" class="input" placeholder="Title" name="title">
+                    <p class="help is-danger">${getError(errors, 'title')}</p>
                 </div>
                 
                 <div class="field">
@@ -26,8 +26,8 @@ module.exports = ({ product, errors }) => {
                 </div>
                 
                 <div class="field">
-                <label class="label">Image</label>            
-                <input type="file" name="image" />
+                    <label class="label">Image</label>            
+                    <input type="file" name="image" />
                 </div>
                 <br />
                 <button class="button is-primary">Edit</button>
