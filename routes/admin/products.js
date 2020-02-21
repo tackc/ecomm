@@ -39,7 +39,7 @@ router.post('/admin/products/new',
 });
 
 // :id is known as a wildcard. It is used here to pass an id of a product
-router.get('/admin/products/:id/edit', async (req, res) => {
+router.get('/admin/products/:id/edit', requireAuth ,async (req, res) => {
     const product = await productsRepo.getOne(req.params.id);
 
     if (!product) {
