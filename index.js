@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const authRouter = require('./routes/admin/auth');
-const productsRouter = require('./routes/admin/products');
+const adminProductsRouter = require('./routes/admin/products');
+const productsRouter = require('./routes/products');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(
 
 // This needs to be after the middleware. The code that lives in routes/admin/auth.js is being utilized here (the code in auth.js used to live in this file)
 app.use(authRouter);
+app.use(adminProductsRouter);
 app.use(productsRouter);
 
 app.listen(3000, () => {
