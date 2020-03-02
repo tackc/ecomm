@@ -1,6 +1,15 @@
 const layout = require('../layout');
 
 module.exports = ({ items }) => {
+    // let totalPrice = 0;
+    // for (let item of items) {
+    //     totalPrice += item.quantity * item.product.price;
+    // }
+
+    const totalPrice = items.reduce((acc, item) => {
+        return acc + item.quantity * item.product.price;
+    }, 0);
+
     const renderedItems = items
         .map(item => {
         return `
@@ -38,11 +47,11 @@ module.exports = ({ items }) => {
                     ${renderedItems}
                     </div>
                     <div class="total message is-info">
-                    <div class="message-header">
-                        Total
-                    </div>
-                    <h1 class="title">$</h1>
-                    <button class="button is-primary">Buy</button>
+                        <div class="message-header">
+                            Total
+                        </div>
+                        <h1 class="title">$${totalPrice}</h1>
+                        <button class="button is-primary">Buy</button>
                     </div>
                 </div>
                 <div class="column"></div>
