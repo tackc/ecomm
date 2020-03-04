@@ -32,11 +32,11 @@ router.post('/cart/products', async (req, res) => {
         items: cart.items
     });
 
-    res.send('Product added to cart')
+    res.redirect('/cart');
 })
 
 // Receive a GET request to show all items in cart
-router.get('/carts', async (req, res) => {
+router.get('/cart', async (req, res) => {
     if (!req.session.cartId) {
         return res.redirect('/');
     }
@@ -54,7 +54,14 @@ router.get('/carts', async (req, res) => {
 
 // Receive a POST request to delete an item from a cart
 router.post('/cart/products/delete', async (req, res) => {
-    console.log(req.body.itemId);
+    const { itemId } = req.body;
+    const cart = await cartsRepo.getOne(req.session.cartId);
+
+    const items = cart.items.filter(item => item.id !== itemId);
+
+    await cartsRepo.update(req.session.cartId, { items });
+
+    return res.redirect('/cart');
 });
 
 module.exports = router;
